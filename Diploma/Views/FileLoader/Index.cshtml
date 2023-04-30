@@ -1,0 +1,14 @@
+﻿@using Diploma.Models;
+@model FileDataViewModel;
+
+<div class="text-center">
+    @foreach (var file in Model.FileNames)
+    {
+        <h2>@file</h2>
+    }
+    <form method="post" enctype="multipart/form-data" asp-action="UploadFiles">
+        <input type="file" name="uploadingFiles" multiple class="form-control" /> @*accept=".xls, .xls"*@
+        <br />
+        <button type="submit" class="btn btn-success">Загрузить файлы</button>
+    </form>
+</div>
