@@ -1,10 +1,36 @@
 ﻿@using Diploma.Models;
 @model FileDataViewModel;
 
+<style>
+    .content {
+        width: 30%;
+        text-align: left;
+    }
+    .buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .buttons > form {
+        margin-bottom: 1em;
+        margin-left: 1em;
+    }
+</style>
+
 <div class="text-center">
     @foreach (var file in Model.FileNames)
     {
-        <h2>@file</h2>
+        <div class="buttons">
+            <div class="content">
+                @file
+            </div>
+            <form>
+                <button name="fileName" class="btn btn-primary" value="@file" asp-action="Analyze">Анализ</button>
+            </form>
+            <form>
+                <button name="fileName" class="btn btn-danger" value="@file" asp-action="DeleteFile">Удалить</button>
+            </form>
+        </div>
     }
     <form method="post" enctype="multipart/form-data" asp-action="UploadFiles">
         <input type="file" name="uploadingFiles" multiple class="form-control" /> @*accept=".xls, .xls"*@
