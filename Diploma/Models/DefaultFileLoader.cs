@@ -12,13 +12,24 @@ namespace Diploma.Models
         public string GetFile(string fileName)
         {
             var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
-            var path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{hash}";
+            var path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
             string result = File.ReadAllText(fileName);
             return result;
         }
 
         public List<string> GetFileList()
         {
+            List <string> fileNames = new List<string>();   
+            string[] directories = Directory.GetDirectories($"{Directory.GetCurrentDirectory()}\\{_folderName}", "*", SearchOption.AllDirectories).ToArray();
+            foreach (var directory in directories)
+            {
+                string[] files = Directory.GetFiles(directory);
+                foreach (string file in files)
+                {
+                    fileNames.Add(Path.GetFileName(file));
+                }
+            }
+            _fileNames = fileNames;
             return _fileNames;
         }
 
@@ -59,6 +70,30 @@ namespace Diploma.Models
             else
             {
                 return modifiedFileName;
+            }
+        }
+
+        public void DeleteFile(string fileName)
+        {
+            var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
+            var path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
+            if (File.Exists(path))
+            {
+                Console.WriteLine("File Exist");
+            }
+            File.Delete(path);
+        }
+
+        public void ConvertToJson(string fileName)
+        {
+            var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
+            var path = $"{Directory.GetCurrentDirectory()}\\{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
+            Console.WriteLine(path);
+            var jsonData = ExcelToJsonParser.Parse(path);
+            var newPath = Directory.CreateDirectory($"{Directory.GetCurrentDirectory()}\\{_folderName}\\Json");
+            using (var streamWriter = new StreamWriter($"{newPath}\\{Path.GetFileNameWithoutExtension(fileName)}.json"))
+            {
+                streamWriter.Write(jsonData);
             }
         }
     }
