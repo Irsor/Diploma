@@ -46,6 +46,11 @@ namespace Diploma.Controllers
             return View("Index", _fileDataViewModel);
         }
 
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+
         private FileDataViewModel _fileDataViewModel = new();
 
         private IFileLoader _loader;

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@using DevExpress.AspNetCore
+@using DevExpress.DashboardWeb
+@using DevExpress.DashboardAspNetCore
+
+
+<div style="position: absolute; left:0;top:0;right:0;bottom:0;">
+    @(Html.DevExpress().Dashboard("clientDashboardControl1")
+        .ControllerName("DefaultDashboard")
+        .WorkingMode(WorkingMode.Designer)
+        .Width("100%")
+        .Height("100%")
+        )
+</div>
