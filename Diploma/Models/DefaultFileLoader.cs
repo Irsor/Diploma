@@ -75,11 +75,15 @@ namespace Diploma.Models
 
         public void DeleteFile(string fileName)
         {
-            var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
-            var path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
-            if (File.Exists(path))
+            string path;
+            if (Path.GetExtension(fileName) == ".json")
             {
-                Console.WriteLine("File Exist");
+                path = $"{_folderName}\\Json\\{fileName}";
+            }
+            else
+            {
+                var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
+                path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
             }
             File.Delete(path);
         }
