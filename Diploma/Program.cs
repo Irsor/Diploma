@@ -1,7 +1,7 @@
-using DevExpress.DashboardAspNetCore;
-using Diploma.Models;
 using DevExpress.AspNetCore;
+using DevExpress.DashboardAspNetCore;
 using DevExpress.DashboardWeb;
+using Diploma.Models;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,9 +15,10 @@ builder.Services.AddSingleton<IFileLoader, DefaultFileLoader>();
 builder.Services.AddSingleton<ExcelToJsonParser>();
 
 builder.Services.AddDevExpressControls();
-builder.Services.AddScoped<DashboardConfigurator>((IServiceProvider serviceProvider) => {
+builder.Services.AddScoped<DashboardConfigurator>((IServiceProvider serviceProvider) =>
+{
     DashboardConfigurator configurator = new DashboardConfigurator();
-    configurator.SetDashboardStorage(new DashboardFileStorage(fileProvider.GetFileInfo("Data/Dashboards").PhysicalPath));
+    configurator.SetDashboardStorage(new DashboardFileStorage($"{Directory.GetCurrentDirectory()}\\AppData\\Dashboards"));
     configurator.SetConnectionStringsProvider(new DashboardConnectionStringsProvider(configuration));
     return configurator;
 });
@@ -35,18 +36,16 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-
 app.UseDevExpressControls();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-
 app.MapDashboardRoute("api/dashboard", "DefaultDashboard");
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=FileLoader}/{action=Index}/{id?}");
+    pattern: "{controller=FileLoader}/{action=Dashboard}/{id?}");
 
 app.Run();

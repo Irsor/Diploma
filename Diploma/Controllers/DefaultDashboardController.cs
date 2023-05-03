@@ -1,7 +1,6 @@
 ﻿using DevExpress.DashboardAspNetCore;
 using DevExpress.DashboardWeb;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Mvc;
 
 namespace WebDashboardAspNetCore.Controllers
 {
@@ -10,12 +9,6 @@ namespace WebDashboardAspNetCore.Controllers
         public DefaultDashboardController(DashboardConfigurator configurator, IDataProtectionProvider? dataProtectionProvider = null)
             : base(configurator, dataProtectionProvider)
         {
-        }
-
-        public IActionResult Index()
-        {
-            Console.WriteLine(42);
-            return View();
         }
     }
 }
