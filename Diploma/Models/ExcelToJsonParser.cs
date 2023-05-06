@@ -10,18 +10,18 @@ namespace Diploma.Models
         public static string Parse(string fileName)
         {
             try
-            {
+            {                
                 List<DataTable> list = new List<DataTable>();
                 Console.WriteLine(fileName);
                 using (SpreadsheetDocument document = SpreadsheetDocument.Open(fileName, false))
                 {
                     WorkbookPart? workbookPart = document.WorkbookPart;
                     Sheets? sheets = workbookPart?.Workbook.GetFirstChild<Sheets>();
+                    DataTable dataTable = new DataTable();
                     if (sheets is not null && workbookPart is not null)
-                    {
+                    {                       
                         foreach (Sheet sheet in sheets.OfType<Sheet>())
-                        {
-                            DataTable dataTable = new DataTable();
+                        {                          
                             Worksheet? worksheet = ((WorksheetPart)workbookPart.GetPartById(sheet.Id)).Worksheet;
                             SheetData? sheetData = worksheet.GetFirstChild<SheetData>();
                             for (int i = 0; i < sheetData?.ChildElements.Count; i++)
@@ -62,10 +62,10 @@ namespace Diploma.Models
                                     dataTable.Rows.Add(rowData.ToArray());
                                 }
                             }
-                            list.Add(dataTable);
+                            //list.Add(dataTable);
                         }
                     }
-                    return JsonConvert.SerializeObject(list);
+                    return JsonConvert.SerializeObject(new SerializeModel(dataTable));
                 }
             }
             catch (Exception exception)

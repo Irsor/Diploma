@@ -11,9 +11,21 @@ namespace Diploma.Models
 
         public string GetFile(string fileName)
         {
-            var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
-            var path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
-            string result = File.ReadAllText(fileName);
+            string path;
+            switch (Path.GetExtension(fileName))
+            {
+                case ".json":
+                    path = $"{_folderName}\\Json\\{fileName}";
+                    break;
+                case ".xml":
+                    path = $"{_folderName}\\Dasgboards\\{fileName}";
+                    break;
+                default:
+                    var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
+                    path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
+                    break;
+            }
+            string result = File.ReadAllText(path);
             return result;
         }
 
@@ -76,14 +88,18 @@ namespace Diploma.Models
         public void DeleteFile(string fileName)
         {
             string path;
-            if (Path.GetExtension(fileName) == ".json")
+            switch (Path.GetExtension(fileName))
             {
-                path = $"{_folderName}\\Json\\{fileName}";
-            }
-            else
-            {
-                var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
-                path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
+                case ".json":
+                    path = $"{_folderName}\\Json\\{fileName}";
+                    break;
+                case ".xml":
+                    path = $"{_folderName}\\Dashboards\\{fileName}";
+                    break;
+                default:
+                    var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
+                    path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
+                    break;
             }
             File.Delete(path);
         }
