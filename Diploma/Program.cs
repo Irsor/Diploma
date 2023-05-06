@@ -22,18 +22,28 @@ builder.Services.AddSingleton<ExcelToJsonParser>();
 builder.Services.AddDevExpressControls();
 builder.Services.AddScoped<DashboardConfigurator>((IServiceProvider serviceProvider) =>
 {
+
     DashboardConfigurator configurator = new DashboardConfigurator();
-    configurator.SetDashboardStorage(new DashboardFileStorage($"{Directory.GetCurrentDirectory()}\\AppData\\Dashboards"));
-    DataSourceInMemoryStorage dataSourceStorage = new DataSourceInMemoryStorage();
-
-
-
-    //DashboardJsonDataSource jsonDataSource = new DashboardJsonDataSource($"Json Data Source ");
-    //jsonDataSource.JsonSource = new CustomJsonSource(loader.GetFile("asdas.json"));
-    //dataSourceStorage.RegisterDataSource("objDataSource", objDataSource.SaveToXml());
-
-    configurator.SetDataSourceStorage(dataSourceStorage);
-    configurator.SetConnectionStringsProvider(new DashboardConnectionStringsProvider(configuration));
+    foreach (var jsonFile in loader.GetFileList())
+    {
+        configurator.SetDashboardStorage(new DashboardFileStorage($"{Directory.GetCurrentDirectory()}\\AppData\\Dashboards"));
+        if (Path.GetExtension(jsonFile) == ".json")
+        {
+            DataSourceInMemoryStorage dataSourceStorage = new DataSourceInMemoryStorage();
+            DashboardJsonDataSource jsonDataSourceString = new DashboardJsonDataSource($"JSON Data Source ({jsonFile})");
+            Elem elem = new Elem("qwe", "qwe", "qwe");
+            System.Xml.Linq.XElement xElement = new("asd", 23);
+            string json = loader.GetFile(jsonFile);
+            jsonDataSourceString.JsonSource = new CustomJsonSource(json);
+            jsonDataSourceString.RootElement = "Value";
+            //dataSourceStorage.RegisterDataSource(jsonFile, jsonDataSourceString.SaveToXml());
+            dataSourceStorage.RegisterDataSource(xElement);
+            configurator.SetDataSourceStorage(dataSourceStorage);
+            Console.WriteLine(jsonFile);
+            configurator.SetConnectionStringsProvider(new DashboardConnectionStringsProvider(configuration));
+        }
+    }
+    
     return configurator;
 });
 
@@ -47,7 +57,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-Console.WriteLine(loader.GetFile("asdas.json"));
+Console.WriteLine(loader.GetFile("asdasd.json"));
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
