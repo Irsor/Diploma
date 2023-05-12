@@ -1,8 +1,6 @@
 ﻿using DevExpress.DashboardAspNetCore;
 using DevExpress.DashboardCommon;
 using DevExpress.DashboardWeb;
-using DevExpress.DataAccess.Json;
-using DevExpress.Pdf.Native;
 using Diploma.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +45,7 @@ namespace Diploma.Controllers
 
         public IActionResult Analyze(string fileName)
         {
-            _loader.ConvertToJson(fileName); 
+            _loader.ConvertToJson(fileName);
             _fileDataViewModel.FileNames = _loader.GetFileList();
             return View("Index", _fileDataViewModel);
         }
@@ -61,9 +59,9 @@ namespace Diploma.Controllers
         public IActionResult File(string DataSourceFileName)
         {
             string json = _loader.GetFile(DataSourceFileName);
-            if (json != "File not exist!") 
+            if (json != "File not exist!")
             {
-                DataSourceInMemoryStorage dataSourceStorage = new DataSourceInMemoryStorage();             
+                DataSourceInMemoryStorage dataSourceStorage = new DataSourceInMemoryStorage();
                 DashboardJsonDataSource jsonDataSourceString = new CustomDataSource($"JSON Data Source ({DataSourceFileName})", json);
                 dataSourceStorage.RegisterDataSource(DataSourceFileName, jsonDataSourceString.SaveToXml());
                 _configurator.SetDataSourceStorage(dataSourceStorage);
@@ -89,6 +87,5 @@ namespace Diploma.Controllers
         private DashboardConfigurator _configurator;
 
         private IConfiguration _configuration;
-
     }
 }

@@ -10,7 +10,7 @@ namespace Diploma.Models
         public static string Parse(string fileName)
         {
             try
-            {                
+            {
                 List<DataTable> list = new List<DataTable>();
                 Console.WriteLine(fileName);
                 using (SpreadsheetDocument document = SpreadsheetDocument.Open(fileName, false))
@@ -19,9 +19,9 @@ namespace Diploma.Models
                     Sheets? sheets = workbookPart?.Workbook.GetFirstChild<Sheets>();
                     DataTable dataTable = new DataTable();
                     if (sheets is not null && workbookPart is not null)
-                    {                       
+                    {
                         foreach (Sheet sheet in sheets.OfType<Sheet>())
-                        {                          
+                        {
                             Worksheet? worksheet = ((WorksheetPart)workbookPart.GetPartById(sheet.Id)).Worksheet;
                             SheetData? sheetData = worksheet.GetFirstChild<SheetData>();
                             for (int i = 0; i < sheetData?.ChildElements.Count; i++)

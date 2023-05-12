@@ -25,7 +25,6 @@
             type: 'POST'
         });
     }
-    
 
     start() {
         this.toolbox = this.dashboardControl.findExtension("toolbox");

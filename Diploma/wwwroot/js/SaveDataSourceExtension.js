@@ -44,6 +44,6 @@
     stop() {
         if (this.isExtensionAvailable()) {
             this.toolbox.menuItems.remove(this.menuItem);
-        }            
+        }
     }
 }

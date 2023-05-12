@@ -17,9 +17,11 @@ namespace Diploma.Models
                 case ".json":
                     path = $"{_folderName}\\Json\\{fileName}";
                     break;
+
                 case ".xml":
                     path = $"{_folderName}\\Dasgboards\\{fileName}";
                     break;
+
                 default:
                     var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
                     path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
@@ -39,7 +41,7 @@ namespace Diploma.Models
 
         public List<string> GetFileList()
         {
-            List <string> fileNames = new List<string>();   
+            List<string> fileNames = new List<string>();
             string[] directories = Directory.GetDirectories($"{Directory.GetCurrentDirectory()}\\{_folderName}", "*", SearchOption.AllDirectories).ToArray();
             foreach (var directory in directories)
             {
@@ -101,9 +103,11 @@ namespace Diploma.Models
                 case ".json":
                     path = $"{_folderName}\\Json\\{fileName}";
                     break;
+
                 case ".xml":
                     path = $"{_folderName}\\Dashboards\\{fileName}";
                     break;
+
                 default:
                     var hash = BitConverter.ToString(_md5.ComputeHash((Encoding.UTF8.GetBytes(fileName)))).Replace("-", "");
                     path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";

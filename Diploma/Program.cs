@@ -2,7 +2,6 @@ using DevExpress.AspNetCore;
 using DevExpress.DashboardAspNetCore;
 using DevExpress.DashboardCommon;
 using DevExpress.DashboardWeb;
-using DevExpress.DataAccess.Json;
 using Diploma.Models;
 using Microsoft.Extensions.FileProviders;
 
