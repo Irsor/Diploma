@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Dashboard>
-  <Title Text="New Dashboard" />
-  <DataSources>
-    <JsonDataSource Name="JSON Data Source (asdasd.json)" RootElement="Value" ComponentName="asd">
-      <Source SourceType="DevExpress.DataAccess.Json.CustomJsonSource" Json="{&quot;Value&quot;:[{&quot;asdsa&quot;:&quot;123&quot;,&quot;sd&quot;:&quot;42&quot;},{&quot;asdsa&quot;:&quot;123&quot;,&quot;sd&quot;:&quot;24&quot;},{&quot;asdsa&quot;:&quot;312&quot;,&quot;sd&quot;:&quot;41&quot;}]}" />
-    </JsonDataSource>
-  </DataSources>
-</Dashboard>

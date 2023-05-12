@@ -15,7 +15,6 @@ namespace Diploma.Controllers
 
         public IActionResult Index()
         {
-            Console.WriteLine(42);
             return View();
         }
 
