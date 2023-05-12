@@ -25,7 +25,15 @@ namespace Diploma.Models
                     path = $"{_folderName}\\{hash.Substring(0, 2)}\\{hash.Substring(2, 2)}\\{fileName}";
                     break;
             }
-            string result = File.ReadAllText(path);
+            string result;
+            if (File.Exists(path))
+            {
+                result = File.ReadAllText(path);
+            }
+            else
+            {
+                result = "File not exist!";
+            }
             return result;
         }
 

@@ -27,7 +27,7 @@
             </div>
             @if (file.Length > 5)
             {
-                @if (file.Substring(file.Length - 5) != ".json")
+                @if (file.Substring(file.Length - 5) != ".json" && file.Substring(file.Length - 4) != ".xml")
                 {
                     <form>
                         <button name="fileName" class="btn btn-primary" value="@file" asp-action="Analyze">Анализ</button>
